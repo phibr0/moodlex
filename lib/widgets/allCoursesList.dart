@@ -9,20 +9,24 @@ class AllCoursesList extends StatelessWidget {
     return GetBuilder<UserDataController>(
       // specify type as Controller
       init: UserDataController(), // intialize with the Controller
-      builder: (userDataController) => ListView.builder(
-        itemCount: userDataController.userData.value.courses?.length ?? 0,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () => Get.to(
-              CourseAssignmentsPage(
-                  userDataController.userData.value.courses[index]),
+      builder: (userDataController) => userDataController
+                  .userData.value.courses ==
+              null
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: userDataController.userData.value.courses?.length ?? 0,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: () => Get.to(
+                    CourseAssignmentsPage(
+                        userDataController.userData.value.courses[index]),
+                  ),
+                  title: Text(
+                    userDataController.userData.value.courses[index].fullname,
+                  ),
+                );
+              },
             ),
-            title: Text(
-              userDataController.userData.value.courses[index].fullname,
-            ),
-          );
-        },
-      ),
     );
   }
 }
